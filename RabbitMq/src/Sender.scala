@@ -13,7 +13,7 @@ import com.rabbitmq.client.Connection
 import com.rabbitmq.client.Channel
 
 object Sender {
-  val queue_name = "hello1"
+  val queue_name = "hello"
 
   def main(args: Array[String]) {
 

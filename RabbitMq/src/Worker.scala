@@ -34,7 +34,8 @@ object Worker {
       val message: String = new String(delivery.getBody)
       println(" [x] received: '%s'".format(message))
       doWork(message)
-//      channel.basicAck(delivery.getEnvelope.getDeliveryTag, false)
+      //NOTE: doing acknowledgement, after making sure that the work is done.
+      channel.basicAck(delivery.getEnvelope.getDeliveryTag, false)
       println(" [x] done")
     }
   }
