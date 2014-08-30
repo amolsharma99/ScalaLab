@@ -1,0 +1,14 @@
+target/
+*/target/
+.idea/
+*.iml
+*.ipr
+*.iws
+*.log
+.DS_Store
+.project
+.classpath
+.cache
+.settings/
+*/null/*
+null/*

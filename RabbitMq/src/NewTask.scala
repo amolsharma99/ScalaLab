@@ -1,19 +1,16 @@
 package src
 
+import com.rabbitmq.client.{Channel, Connection, ConnectionFactory}
+
 /**
  * Created with IntelliJ IDEA.
  * User: amol.sharma
- * Date: 25/08/14
- * Time: 12:54 AM
+ * Date: 29/08/14
+ * Time: 7:16 PM
  * To change this template use File | Settings | File Templates.
  */
-
-import com.rabbitmq.client.ConnectionFactory
-import com.rabbitmq.client.Connection
-import com.rabbitmq.client.Channel
-
-object Sender {
-  val queue_name = "hello1"
+object NewTask {
+  val queue_name = "hello"
 
   def main(args: Array[String]) {
 
@@ -25,7 +22,9 @@ object Sender {
 
     //declare queue and publish message
     channel.queueDeclare(queue_name, false, false, false, null) //Declaring a queue is idempotent - it will only be created if it doesn't exist already
-    val message: String = "Hello World" //The message content is a byte array, so you can encode whatever you like there.
+
+
+    val message: String = getMessage(args) //The message content is a byte array, so you can encode whatever you like there.
     channel.basicPublish("", queue_name, null, message.getBytes())
     println("[x] sent '%s'".format(message))
 
@@ -34,5 +33,11 @@ object Sender {
     connection.close()
   }
 
-}
+  private def getMessage(strings: Array[String]): String = {
+    if (strings.length < 1)
+      "Hello World !!!"
+    else
+      strings.mkString(" ")
+  }
 
+}
