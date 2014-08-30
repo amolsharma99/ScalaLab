@@ -23,15 +23,18 @@ object Worker {
     channel.queueDeclare(queue_name, false, false, false, null)
     println(" [*] Waiting for messages. To exit press CTRL+C")
 
+    val autoAck: Boolean = false
+
     //extra QueueingConsumer is a class we'll use to buffer the messages pushed to us by the server.
     val consumer: QueueingConsumer = new QueueingConsumer(channel)
-    channel.basicConsume(queue_name, true, consumer)
+    channel.basicConsume(queue_name, autoAck, consumer)
 
     while (true) {
       val delivery: QueueingConsumer.Delivery = consumer.nextDelivery
       val message: String = new String(delivery.getBody)
       println(" [x] received: '%s'".format(message))
       doWork(message)
+//      channel.basicAck(delivery.getEnvelope.getDeliveryTag, false)
       println(" [x] done")
     }
   }
